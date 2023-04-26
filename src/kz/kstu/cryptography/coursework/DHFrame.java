@@ -9,15 +9,23 @@ package kz.kstu.cryptography.coursework;
  * @author 1234
  */
 public class DHFrame extends javax.swing.JFrame {
- 
+ Menu menu;
     /**
      * Creates new form DHFrame
      */
-    public DHFrame() {
+    public DHFrame(Menu menu) {
+        this.menu = menu;
         initComponents();
         setLocation(550,250);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Diffie Hellman");
     }
-
+@Override
+public void dispose() {
+        menu.setVisible(true);
+         super.dispose();
+         
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -282,10 +290,8 @@ int P=0,g=0,Ya=0,Yb=0,Z=0,Xa,Xb;
        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    
+    public static void init() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -312,7 +318,6 @@ int P=0,g=0,Ya=0,Yb=0,Z=0,Xa,Xb;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DHFrame().setVisible(true);
             }
         });
     }

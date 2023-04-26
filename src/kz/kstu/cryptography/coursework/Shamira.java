@@ -10,14 +10,23 @@ package kz.kstu.cryptography.coursework;
  */
 public class Shamira extends javax.swing.JFrame {
     private int Ca=0,Da=0,Cb=0,Db=0,m=0,x1=0,x2=0,x3=0,x4=0,P=0;
+    Menu menu;
     /**
      * Creates new form Shamira
      */
-    public Shamira() {
+    public Shamira(Menu menu) {
         initComponents();
         setLocation(550,250);
+        this.menu = menu;
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Shamira");
     }
-
+@Override
+public void dispose() {
+        menu.setVisible(true);
+         super.dispose();
+         
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -289,10 +298,7 @@ public class Shamira extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MessBActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+  public static void init() { 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -319,7 +325,6 @@ public class Shamira extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Shamira().setVisible(true);
             }
         });
     }

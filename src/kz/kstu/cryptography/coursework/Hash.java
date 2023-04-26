@@ -24,14 +24,23 @@ File file=null;
 String text = null;
 Path filePath = null;
 String path=null;
-String textgo=" 123";
+String textgo="";
+Menu menu;
     /**
      * Creates new form Hash
      */
-    public Hash() {
+    public Hash(Menu menu) {
+        this.menu = menu;
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Hash");
     }
-
+@Override
+public void dispose() {
+        menu.setVisible(true);
+         super.dispose();
+         
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,7 +55,7 @@ String textgo=" 123";
         MessageA = new javax.swing.JTextArea();
         Answer = new javax.swing.JTextField();
         FindButton = new javax.swing.JButton();
-        FileButton = new javax.swing.JButton();
+        ChooseFIleButton = new javax.swing.JButton();
         PTF = new javax.swing.JTextField();
         QTF = new javax.swing.JTextField();
         NTF = new javax.swing.JTextField();
@@ -71,10 +80,10 @@ String textgo=" 123";
             }
         });
 
-        FileButton.setText("Choose file");
-        FileButton.addActionListener(new java.awt.event.ActionListener() {
+        ChooseFIleButton.setText("Choose file");
+        ChooseFIleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FileButtonActionPerformed(evt);
+                ChooseFIleButtonActionPerformed(evt);
             }
         });
 
@@ -128,7 +137,7 @@ String textgo=" 123";
                         .addGap(20, 20, 20))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FileButton)
+                            .addComponent(ChooseFIleButton)
                             .addComponent(WhereGo))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -152,7 +161,7 @@ String textgo=" 123";
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(FileButton)
+                        .addComponent(ChooseFIleButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Answer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,8 +185,9 @@ String textgo=" 123";
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileButtonActionPerformed
+    private void ChooseFIleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseFIleButtonActionPerformed
        jfc = new JFileChooser();
+       jfc.setCurrentDirectory(new File("D:"));
        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
        int ret = jfc.showDialog(null, "Открыть файл");                
                 if (ret == JFileChooser.APPROVE_OPTION) {
@@ -188,18 +198,19 @@ String textgo=" 123";
                 filePath = Path.of(path);
     try {
         text = Files.readString(filePath);
+        System.out.println(text);
     } catch (IOException ex) {
         Logger.getLogger(Hash.class.getName()).log(Level.SEVERE, null, ex);
     }
-    }//GEN-LAST:event_FileButtonActionPerformed
+    }//GEN-LAST:event_ChooseFIleButtonActionPerformed
 
     private void FindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindButtonActionPerformed
 char[] charray = text.toCharArray();
-P=OTT.P(1000);
-Q=OTT.P(1000);
+P=OTT.P(100);
+Q=OTT.P(100);
 N=P*Q;
 for(int i = 0;i<charray.length;i++){
-    v = ((int) (Math.pow(v^charray[i],2)))%N;
+    v =   OTT.kkk((v^(int)charray[i]), 2, N);
     textgo =textgo +i+") "+ Integer.toString(v)+"\n";
 }
 PTF.setText(Integer.toString(P));
@@ -210,32 +221,36 @@ Answer.setText(Integer.toString(v));
 
     private void WhereGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WhereGoActionPerformed
         jfc = new JFileChooser();
+        FileOutputStream fos = null;
+        jfc.setCurrentDirectory(new File("D:"));
        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
        int ret = jfc.showDialog(null, "Открыть файл");                
                 if (ret == JFileChooser.APPROVE_OPTION) {
                     file = jfc.getSelectedFile();
                 }
               try {
+                  
                    path = file.getPath();
                 filePath = Path.of(path);
+                fos = new FileOutputStream(file);
+                char[] chararay = textgo.toCharArray();
+                for(int i = 0;i<chararay.length;i++){
+                fos.write(chararay[i]);
+                }
             // Write content to file
             Files.writeString(filePath, textgo,
-                              StandardOpenOption.APPEND);
-  
+                              StandardOpenOption.WRITE);
             // Verify file content
-            String content = Files.readString(filePath);
+            
   
-            System.out.println(content);
+            System.out.println(textgo);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_WhereGoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    public static void init() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -262,14 +277,13 @@ Answer.setText(Integer.toString(v));
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Hash().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Answer;
-    private javax.swing.JButton FileButton;
+    private javax.swing.JButton ChooseFIleButton;
     private javax.swing.JButton FindButton;
     private javax.swing.JTextArea MessageA;
     private javax.swing.JTextField NTF;

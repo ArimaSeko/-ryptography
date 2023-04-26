@@ -10,14 +10,23 @@ package kz.kstu.cryptography.coursework;
  */
 public class ElGamal extends javax.swing.JFrame {
 int m=0,m1=0,r=0,e=0,Da=0,Db=0, Ca=0,Cb=0,P=0,g=0,k=0;
+Menu menu;
     /**
      * Creates new form ElGamal
      */
-    public ElGamal() {
+    public ElGamal(Menu menu) {
+        this.menu = menu;
         initComponents();
         setLocation(550,250);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("El Gamal");
     }
-
+@Override
+public void dispose() {
+        menu.setVisible(true);
+         super.dispose();
+         
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -280,10 +289,8 @@ int m=0,m1=0,r=0,e=0,Da=0,Db=0, Ca=0,Cb=0,P=0,g=0,k=0;
         }
     }//GEN-LAST:event_MessButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    
+    public static void init() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -310,7 +317,6 @@ int m=0,m1=0,r=0,e=0,Da=0,Db=0, Ca=0,Cb=0,P=0,g=0,k=0;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ElGamal().setVisible(true);
             }
         });
     }

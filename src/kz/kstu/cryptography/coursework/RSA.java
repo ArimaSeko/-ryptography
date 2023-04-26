@@ -4,18 +4,24 @@
  */
 package kz.kstu.cryptography.coursework;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author 1234
  */
 public class RSA extends javax.swing.JFrame {
 int P=0, Q=0,Na=0,Nb=0,Cb=3,Db=0,e=0,m=0,m1=0, ф =0; 
+Menu menu;
     /**
      * Creates new form RSA
      */
-    public RSA() {
+    public RSA(Menu menu) {
+        this.menu = menu;
         initComponents();
         setLocation(550,250);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("RSA");
     }
 
     /**
@@ -218,10 +224,7 @@ int P=0, Q=0,Na=0,Nb=0,Cb=3,Db=0,e=0,m=0,m1=0, ф =0;
        
     }//GEN-LAST:event_MesTFActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+     public static void init(){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -249,10 +252,15 @@ int P=0, Q=0,Na=0,Nb=0,Cb=3,Db=0,e=0,m=0,m1=0, ф =0;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new RSA().setVisible(true);
             }
         });
     }
+     @Override
+public void dispose() {
+        menu.setVisible(true);
+         super.dispose();
+         
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CbTF;
